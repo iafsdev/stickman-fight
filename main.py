@@ -1,39 +1,44 @@
-# Importa la librería
+import sys
+
 import pygame
 
-# Inicia el juego y crea las variables necesarias
-pygame.init()
-screen = pygame.display.set_mode((1280, 720))
-clock = pygame.time.Clock()
-running = True
-dt = 0
+class Game:
+    def __init__(self) -> None:
+        
+        pygame.init()
 
-# Calcula la posición donde va iniciar el jugador, en este caso el centro de la pantalla
-player_pos = pygame.Vector2(screen.get_width() / 2, screen.get_height() / 2)
+        pygame.display.set_caption('stickman fight')
+        self.screen = pygame.display.set_mode((640, 480))
 
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-
-    screen.fill("darkorchid3")
-
-    # pygame.draw.circle(screen, "red", player_pos, 40)
-
-    # # Comprueba que tecla está siendo presionada
-    # keys = pygame.key.get_pressed()
-    # if keys[pygame.K_UP]:
-    #     player_pos.y -= 200 * dt
-    # if keys[pygame.K_DOWN]:
-    #     player_pos.y += 200 * dt
-    # if keys[pygame.K_LEFT]:
-    #     player_pos.x -= 200 * dt
-    # if keys[pygame.K_RIGHT]:
-    #     player_pos.x += 200 * dt
-
-    # Actualiza la pantalla
-    pygame.display.flip()
-
-    # Determina cuanto es el tiempo para cada frame para actualizar el desplazamiento y ajusta un límite de FPS
-
-pygame.quit()
+        self.clock = pygame.time.Clock()
+        
+        self.img = pygame.image.load('./data/character/mono.png')
+        
+        self.img_pos = [160, 260]
+        self.movement = [False, False]
+    def run(self):
+        while True:
+            self.screen.fill((14, 219, 248))
+            self.img_pos[0] += (self.movement[0] - self.movement[1]) * 5
+            self.screen.blit(self.img, self.img_pos)
+            
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RIGHT:
+                        self.movement[0] = True
+                    if event.key == pygame.K_LEFT:
+                        self.movement[1] = True
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RIGHT:
+                        self.movement[0] = False
+                    if event.key == pygame.K_LEFT:
+                        self.movement[1] = False
+                    
+            
+            pygame.display.update()
+            self.clock.tick(60)
+            
+Game().run()

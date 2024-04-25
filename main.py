@@ -4,29 +4,41 @@ from fighter import Fighter
 pygame.init()
 
 # Crear la ventana
-SCREEN_WIDTH = 1000
-SCREEN_HEIGT = 600
+SCREEN_WIDTH = 1024
+SCREEN_HEIGHT = 640
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGT))
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Stickman Fight')
 
+# Configurar el framerate
+clock = pygame.time.Clock()
+FPS = 60
+
 # Cargar imágen del fondo
-bg_image = pygame.image.load('./assets/images/background/fondo.png').convert_alpha()
+bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
 
 # Función para mostrar el fondo
 def draw_bg():
-    scaled_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGT))
+    scaled_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
     screen.blit(scaled_bg, (0,0))
 
 # Crear dos peleadores
-fighter_1 = Fighter(200, 310)
-fighter_2 = Fighter(700, 310)
+fighter_1 = Fighter(200, 400)
+fighter_2 = Fighter(700, 400)
 
 # Ejecución del juego
 run = True
 while run:
+    screen.fill('darkorchid2')
+    
+    clock.tick(FPS)
+    
     # Dibujar el fondo
     draw_bg()
+    
+    # Mover a los peleadores
+    fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+    # fighter_2.move()
     
     # Dibujar los peleadores
     fighter_1.draw(screen)

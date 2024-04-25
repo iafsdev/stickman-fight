@@ -1,4 +1,5 @@
 import pygame
+from fighter import Fighter
 
 pygame.init()
 
@@ -17,11 +18,19 @@ def draw_bg():
     scaled_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGT))
     screen.blit(scaled_bg, (0,0))
 
+# Crear dos peleadores
+fighter_1 = Fighter(200, 310)
+fighter_2 = Fighter(700, 310)
+
 # Ejecución del juego
 run = True
 while run:
     # Dibujar el fondo
     draw_bg()
+    
+    # Dibujar los peleadores
+    fighter_1.draw(screen)
+    fighter_2.draw(screen)
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

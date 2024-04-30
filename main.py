@@ -37,7 +37,7 @@ while run:
     draw_bg()
     
     # Mover a los peleadores
-    fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT)
+    fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
     # fighter_2.move()
     
     # Dibujar los peleadores

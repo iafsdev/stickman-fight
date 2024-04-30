@@ -16,10 +16,13 @@ FPS = 60
 
 # Cargar imágen del fondo
 bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
+bg_image_2 = pygame.image.load('./assets/images/background/Fonfoooo.png').convert_alpha()
 
 # Función para mostrar el fondo
 def draw_bg():
+    scaled_bg_2 = pygame.transform.scale(bg_image_2, (SCREEN_WIDTH, SCREEN_HEIGHT))
     scaled_bg = pygame.transform.scale(bg_image, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen.blit(scaled_bg_2, (0,0))
     screen.blit(scaled_bg, (0,0))
 
 # Crear dos peleadores

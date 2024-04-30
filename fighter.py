@@ -1,7 +1,8 @@
 import pygame
 
 class Fighter():
-  def __init__(self, x, y) -> None:
+  def __init__(self, player, x, y) -> None:
+    self.player = player 
     self.flip = False
     self.rect = pygame.Rect((x, y, 40, 90))
     self.vel_y = 0
@@ -18,29 +19,54 @@ class Fighter():
     
     # Obtener las teclas
     key = pygame.key.get_pressed()
+    
+    #Solo puede realizar otras acciones si no esta atacando actualmente
     if self.attacking == False:
-
-    # Movimiento
-      if key[pygame.K_a]:
-        dx = -SPEED
-      if key[pygame.K_d]:
-        dx = SPEED
+      # Controles jugador 1
+      if self.player == 1:
+        # Movimiento
+        if key[pygame.K_a]:
+          dx = -SPEED
+        if key[pygame.K_d]:
+          dx = SPEED
+          
+        # Salto
+        if key[pygame.K_w] and self.jump == False:
+          self.vel_y = -30
+          self.jump = True
         
-      # Salto
-      if key[pygame.K_w] and self.jump == False:
-        self.vel_y = -30
-        self.jump = True
+        # Ataques
+        if key[pygame.K_c] or key[pygame.K_v]:
+          self.attack(surface, target)
+          # Determinar el ataque usado
+          if key[pygame.K_c]:
+            self.attack_type = 1
+          if key[pygame.K_v]:
+            self.attack_type = 2
+          self.attacking = False
       
-      # Ataques
-      if key[pygame.K_k] or key[pygame.K_l]:
-        self.attack(surface, target)
-        # Determinar el ataque usado
-        if key[pygame.K_k]:
-          self.attack_type = 1
-        if key[pygame.K_l]:
-          self.attack_type = 2
-        self.attacking = False
-
+      # Controles jugador 2
+      if self.player == 2:
+        # Movimiento
+        if key[pygame.K_g]:
+          dx = -SPEED
+        if key[pygame.K_j]:
+          dx = SPEED
+          
+        # Salto
+        if key[pygame.K_y] and self.jump == False:
+          self.vel_y = -30
+          self.jump = True
+        
+        # Ataques
+        if key[pygame.K_k] or key[pygame.K_l]:
+          self.attack(surface, target)
+          # Determinar el ataque usado
+          if key[pygame.K_k]:
+            self.attack_type = 1
+          if key[pygame.K_l]:
+            self.attack_type = 2
+          self.attacking = False
 
     # Aplicar gravedad
     self.vel_y += GRAVITY 

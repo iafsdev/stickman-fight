@@ -20,6 +20,10 @@ RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 WHITE = (255, 255, 255)
 
+# Variable de Juego
+intro_count = 3
+last_count_update = pygame.time.get_ticks()
+
 # Cargar imágen del fondo
 bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
 bg_image_2 = pygame.image.load('./assets/images/background/Fonfoooo.png').convert_alpha()
@@ -39,8 +43,8 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
 
 # Crear dos peleadores
-fighter_1 = Fighter(200, 400)
-fighter_2 = Fighter(700, 400)
+fighter_1 = Fighter(1, 200, 400)
+fighter_2 = Fighter(2, 700, 400)
 
 # Ejecución del juego
 run = True
@@ -56,8 +60,19 @@ while run:
     draw_health_bar(fighter_1.health, 20, 20)
     draw_health_bar(fighter_2.health, 600, 20)
 
-    # Mover a los peleadores
-    fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
+    # Actualizar contador
+    if intro_count <= 0:
+        # Mover a los peleadores
+        fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
+        fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
+    else:
+        # Actualiza el contador
+        if (pygame.time.get_ticks() - last_count_update) >= 1000:
+            intro_count -= 1
+            last_count_update = pygame.time.get_ticks()
+            print(intro_count)
+
+    
     # fighter_2.move()
     
     # Dibujar los peleadores

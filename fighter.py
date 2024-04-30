@@ -39,6 +39,7 @@ class Fighter():
           self.attack_type = 1
         if key[pygame.K_l]:
           self.attack_type = 2
+        self.attacking = False
 
 
     # Aplicar gravedad
@@ -56,7 +57,7 @@ class Fighter():
       dy = screen_height - 150 - self.rect.bottom
 
     # Poner en cara cada jugador
-    if target.rect.centerx > self.rect.center:
+    if target.rect.centerx > self.rect.centerx:
       self.flip = False
     else:
       self.flip = True

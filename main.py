@@ -46,6 +46,7 @@ def draw_health_bar(health, x, y):
 fighter_1 = Fighter(1, 200, 400)
 fighter_2 = Fighter(2, 700, 400)
 
+
 # Ejecución del juego
 run = True
 while run:

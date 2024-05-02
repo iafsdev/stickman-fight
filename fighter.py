@@ -48,23 +48,23 @@ class Fighter():
       # Controles jugador 2
       if self.player == 2:
         # Movimiento
-        if key[pygame.K_g]:
-          dx = -SPEED
         if key[pygame.K_j]:
+          dx = -SPEED
+        if key[pygame.K_l]:
           dx = SPEED
           
         # Salto
-        if key[pygame.K_y] and self.jump == False:
+        if key[pygame.K_i] and self.jump == False:
           self.vel_y = -30
           self.jump = True
         
         # Ataques
-        if key[pygame.K_k] or key[pygame.K_l]:
+        if key[pygame.K_n] or key[pygame.K_m]:
           self.attack(surface, target)
           # Determinar el ataque usado
-          if key[pygame.K_k]:
+          if key[pygame.K_n]:
             self.attack_type = 1
-          if key[pygame.K_l]:
+          if key[pygame.K_m]:
             self.attack_type = 2
           self.attacking = False
 

@@ -10,6 +10,7 @@ class Fighter():
     self.attacking = False
     self.attack_type =  0
     self.health = 100
+    self.alive = True
     
   def move(self, screen_width, screen_height, surface, target):
     SPEED = 10
@@ -67,6 +68,9 @@ class Fighter():
           if key[pygame.K_m]:
             self.attack_type = 2
           self.attacking = False
+            
+    if self.health <= 0:
+      self.alive = False
 
     # Aplicar gravedad
     self.vel_y += GRAVITY 
@@ -97,7 +101,7 @@ class Fighter():
     attacking_rect = pygame.Rect(self.rect.centerx - (2 * self. rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.rect.height)
     if attacking_rect.colliderect(target.rect):
       target.health -= 10
-    pygame.draw.rect(surface, (0, 255, 0), self.rect)
+    pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
   def draw(self, surface):
     pygame.draw.rect(surface, (255, 0, 0), self.rect)

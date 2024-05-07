@@ -23,6 +23,8 @@ WHITE = (255, 255, 255)
 # Variable de Juego
 intro_count = 3
 last_count_update = pygame.time.get_ticks()
+round_over = False
+ROUND_OVER_COOLDOWN = 2000
 
 # Cargar imágen del fondo
 bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
@@ -79,6 +81,22 @@ while run:
     # Dibujar los peleadores
     fighter_1.draw(screen)
     fighter_2.draw(screen)
+    
+    # checa si algun jugador perdió
+    if not round_over:
+        if not fighter_1.alive:
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
+        elif not fighter_2.alive:
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
+    else:
+        if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
+            round_over = False
+            intro_count = 3
+            fighter_1 = Fighter(1, 200, 400)
+            fighter_2 = Fighter(2, 700, 400)
+            
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

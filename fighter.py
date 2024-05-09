@@ -7,7 +7,7 @@ class Fighter():
     self.action = 0 # 0: idle, 1: sprint, 2: jump
     self.frame_index = 0
     self.image = animations['idle'][0]
-    self.offset = [240, 200]
+    self.offset = [280, 200]
     self.scale = 0.25
     self.rect = pygame.Rect((x, y, 40, 90))
     self.vel_y = 0
@@ -103,9 +103,9 @@ class Fighter():
 
   def attack (self, surface, target):
     self.attacking = True
-    attacking_rect = pygame.Rect(self.rect.centerx - (2 * self. rect.width * self.flip), self.rect.y, 2 * self.rect.width, self.rect.height)
+    attacking_rect = pygame.Rect(self.rect.centerx - (self. rect.width * self.flip), self.rect.y,  self.rect.width, self.rect.height)
     if attacking_rect.colliderect(target.rect):
-      target.health -= 10
+      target.health -= 1
     pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
   def draw(self, surface):

@@ -1,9 +1,14 @@
 import pygame
 
 class Fighter():
-  def __init__(self, player, x, y) -> None:
+  def __init__(self, player, x, y, animations) -> None:
     self.player = player 
     self.flip = False
+    self.action = 0 # 0: idle, 1: sprint, 2: jump
+    self.frame_index = 0
+    self.image = animations['idle'][0]
+    self.offset = [240, 200]
+    self.scale = 0.25
     self.rect = pygame.Rect((x, y, 40, 90))
     self.vel_y = 0
     self.jump = False
@@ -104,4 +109,6 @@ class Fighter():
     pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
 
   def draw(self, surface):
-    pygame.draw.rect(surface, (255, 0, 0), self.rect)
+    img = pygame.transform.flip(self.image, self.flip, False)
+    # pygame.draw.rect(surface, (255, 0, 0), self.rect)
+    surface.blit(img, (self.rect.x - (self.offset[0] * self.scale), self.rect.y - (self.offset[1] * self.scale)))

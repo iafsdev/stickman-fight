@@ -1,6 +1,6 @@
 import pygame
-from pygame import mixer
 from fighter import Fighter
+from animations import get_animations
 
 pygame.init()
 
@@ -30,6 +30,9 @@ ROUND_OVER_COOLDOWN = 2000
 bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
 bg_image_2 = pygame.image.load('./assets/images/background/Fonfoooo.png').convert_alpha()
 
+# obtener animaciones
+animations = get_animations()
+
 # Función para mostrar el fondo
 def draw_bg():
     scaled_bg_2 = pygame.transform.scale(bg_image_2, (SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -45,8 +48,8 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
 
 # Crear dos peleadores
-fighter_1 = Fighter(1, 200, 400)
-fighter_2 = Fighter(2, 700, 400)
+fighter_1 = Fighter(1, 200, 400, animations)
+fighter_2 = Fighter(2, 700, 400, animations)
 
 
 # Ejecución del juego
@@ -94,8 +97,8 @@ while run:
         if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
             round_over = False
             intro_count = 3
-            fighter_1 = Fighter(1, 200, 400)
-            fighter_2 = Fighter(2, 700, 400)
+            fighter_1 = Fighter(1, 200, 400, animations)
+            fighter_2 = Fighter(2, 700, 400, animations)
             
     
     for event in pygame.event.get():

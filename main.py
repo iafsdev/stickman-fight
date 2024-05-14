@@ -48,8 +48,8 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
 
 # Crear dos peleadores
-fighter_1 = Fighter(1, 200, 400, animations)
-fighter_2 = Fighter(2, 700, 400, animations)
+fighter_1 = Fighter(1, 200, 400, False, animations)
+fighter_2 = Fighter(2, 700, 400, True, animations)
 
 
 # Ejecución del juego
@@ -79,7 +79,9 @@ while run:
             print(intro_count)
 
     
-    # fighter_2.move()
+    # Actualizar peleadores
+    fighter_1.update()
+    fighter_2.update()
     
     # Dibujar los peleadores
     fighter_1.draw(screen)

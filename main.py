@@ -53,11 +53,12 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
 
 # Crear dos peleadores
-fighter_1 = Fighter(1, 200, 400, animations)
-fighter_2 = Fighter(2, 700, 400, animations)
+fighter_1 = Fighter(1, 200, 400, False, animations)
+fighter_2 = Fighter(2, 700, 400, True, animations)
 
 
 # Ejecución del juego
+
 run = True
 while run:
     for event in pygame.event.get():
@@ -85,18 +86,7 @@ while run:
             intro_count -= 1
             last_count_update = time_now
             print(intro_count)
-    else:
-        # Mostrar la imagen durante 2 segundos al llegar a cero el contador
-        if not show_image:
-            show_image = True
-            show_image_time = time_now
-
-        if show_image and time_now - show_image_time < 1000:
-            screen.blit(fight_img, (0, 20))
-        else:
-            # Mostrar la imagen de fondo y mover a los peleadores
-            fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
-            fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
+            
 
     # Dibujar los peleadores
     fighter_1.draw(screen)
@@ -115,8 +105,8 @@ while run:
         if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
             round_over = False
             intro_count = 3
-            fighter_1 = Fighter(1, 200, 400, animations)
-            fighter_2 = Fighter(2, 700, 400, animations)
+            fighter_1 = Fighter(1, 200, 400, False, animations)
+            fighter_2 = Fighter(2, 700, 400, True, animations)
             
     
     for event in pygame.event.get():

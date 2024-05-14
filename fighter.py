@@ -1,16 +1,19 @@
 import pygame
 
 class Fighter():
-  def __init__(self, player, x, y, animations) -> None:
+  def __init__(self, player, x, y, flip, animations) -> None:
     self.player = player 
-    self.flip = False
-    self.action = 0 # 0: idle, 1: sprint, 2: jump
+    self.flip = flip
+    self.action = 'idle' # 0: idle, 1: sprint, 2: jump
     self.frame_index = 0
-    self.image = animations['idle'][0]
+    self.animations = animations
+    self.image = self.animations['idle'][0]
+    self.update_time = pygame.time.get_ticks()
     self.offset = [280, 200]
     self.scale = 0.25
     self.rect = pygame.Rect((x, y, 40, 90))
     self.vel_y = 0
+    self.running = False
     self.jump = False
     self.attacking = False
     self.attack_type =  0
@@ -22,6 +25,7 @@ class Fighter():
     GRAVITY = 2
     dx = 0
     dy = 0
+    self.running = False
     
     # Obtener las teclas
     key = pygame.key.get_pressed()
@@ -33,8 +37,10 @@ class Fighter():
         # Movimiento
         if key[pygame.K_a]:
           dx = -SPEED
+          self.running = True
         if key[pygame.K_d]:
           dx = SPEED
+          self.running = True
           
         # Salto
         if key[pygame.K_w] and self.jump == False:
@@ -56,8 +62,10 @@ class Fighter():
         # Movimiento
         if key[pygame.K_j]:
           dx = -SPEED
+          self.running = True
         if key[pygame.K_l]:
           dx = SPEED
+          self.running = True
           
         # Salto
         if key[pygame.K_i] and self.jump == False:
@@ -100,6 +108,27 @@ class Fighter():
     # Actualizar la posición del jugador
     self.rect.x += dx
     self.rect.y += dy
+    
+  # Actualizar animaciones
+  def update(self):
+    # Checar la accción que se esta ejecutando
+    if self.jump:
+      self.update_action('jump')
+    elif self.running:
+      self.update_action('sprint')
+    else:
+      self.update_action('idle')
+    
+    animation_cooldown = 50
+    self.image = self.animations[self.action][self.frame_index]
+    # Aplica un cooldown entre animcaciones
+    if pygame.time.get_ticks() - self.update_time > animation_cooldown:
+      self.frame_index += 1
+      self.update_time = pygame.time.get_ticks()
+    # Checa si hay más animación
+    if self.frame_index >= len(self.animations[self.action]):
+      self.frame_index = 0
+      
 
   def attack (self, surface, target):
     self.attacking = True
@@ -107,6 +136,15 @@ class Fighter():
     if attacking_rect.colliderect(target.rect):
       target.health -= 1
     pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
+    
+  def update_action(self, new_action):
+    # Checa si la nueva acción es diferente a la actual
+    if new_action != self.action:
+      self.action = new_action
+      # Actualizar las configuración de la animación
+      self.frame_index = 0
+      self.update_time = pygame.time.get_ticks()
+      
 
   def draw(self, surface):
     img = pygame.transform.flip(self.image, self.flip, False)

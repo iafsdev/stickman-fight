@@ -23,6 +23,8 @@ WHITE = (255, 255, 255)
 # Variable de Juego
 intro_count = 3
 last_count_update = pygame.time.get_ticks()
+show_image = False
+show_image_time = 0
 round_over = False
 ROUND_OVER_COOLDOWN = 2000
 
@@ -56,8 +58,13 @@ fighter_2 = Fighter(2, 700, 400, True, animations)
 
 
 # Ejecución del juego
+
 run = True
 while run:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
     screen.fill('darkorchid2')
     
     clock.tick(FPS)
@@ -70,19 +77,28 @@ while run:
     draw_health_bar(fighter_2.health, 600, 20)
 
     # Actualizar contador
-    if intro_count <= 0:
-        # Mover a los peleadores
-        fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
-        fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
-        screen.blit(fight_img, (0, 20))
-    else:
-        # Actualiza el contador
-        if (pygame.time.get_ticks() - last_count_update) >= 1000:
+    time_now = pygame.time.get_ticks()
+    time_elapsed = (time_now - last_count_update) / 1000  # Convertir a segundos
+
+    if intro_count > 0:
+        # Actualizar el contador
+        if time_elapsed >= 1:
             intro_count -= 1
-            last_count_update = pygame.time.get_ticks()
+            last_count_update = time_now
             print(intro_count)
-            
-    
+    else:
+        # Mostrar la imagen durante 2 segundos al llegar a cero el contador
+        if not show_image:
+            show_image = True
+            show_image_time = time_now
+
+        if show_image and time_now - show_image_time < 1000:
+            screen.blit(fight_img, (0, 20))
+        else:
+            # Mostrar la imagen de fondo y mover a los peleadores
+            fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
+            fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
+
     # Actualizar peleadores
     fighter_1.update()
     fighter_2.update()

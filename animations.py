@@ -13,6 +13,6 @@ def get_animations():
   img = pygame.image.load('./assets/images/animations/jump/jump.png').convert_alpha()
   jump_list = [pygame.transform.scale(img, (size * scale, size * scale))]
   animations['jump'] = jump_list
-  animations['sprint'] = jump_list
+  animations['sprint'] = idle_list
   
   return animations

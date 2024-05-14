@@ -99,8 +99,8 @@ while run:
         if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
             round_over = False
             intro_count = 3
-            fighter_1 = Fighter(1, 200, 400, animations)
-            fighter_2 = Fighter(2, 700, 400, animations)
+            fighter_1 = Fighter(1, 200, 400, False, animations)
+            fighter_2 = Fighter(2, 700, 400, True, animations)
             
     
     for event in pygame.event.get():

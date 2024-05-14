@@ -1,6 +1,6 @@
 import pygame
-from pygame import mixer
 from fighter import Fighter
+from animations import get_animations
 
 pygame.init()
 
@@ -23,10 +23,15 @@ WHITE = (255, 255, 255)
 # Variable de Juego
 intro_count = 3
 last_count_update = pygame.time.get_ticks()
+round_over = False
+ROUND_OVER_COOLDOWN = 2000
 
 # Cargar imágen del fondo
 bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
 bg_image_2 = pygame.image.load('./assets/images/background/Fonfoooo.png').convert_alpha()
+
+# obtener animaciones
+animations = get_animations()
 
 # Función para mostrar el fondo
 def draw_bg():
@@ -43,8 +48,8 @@ def draw_health_bar(health, x, y):
     pygame.draw.rect(screen, YELLOW, (x, y, 400 * ratio, 30))
 
 # Crear dos peleadores
-fighter_1 = Fighter(1, 200, 400)
-fighter_2 = Fighter(2, 700, 400)
+fighter_1 = Fighter(1, 200, 400, False, animations)
+fighter_2 = Fighter(2, 700, 400, True, animations)
 
 
 # Ejecución del juego
@@ -74,11 +79,29 @@ while run:
             print(intro_count)
 
     
-    # fighter_2.move()
+    # Actualizar peleadores
+    fighter_1.update()
+    fighter_2.update()
     
     # Dibujar los peleadores
     fighter_1.draw(screen)
     fighter_2.draw(screen)
+    
+    # checa si algun jugador perdió
+    if not round_over:
+        if not fighter_1.alive:
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
+        elif not fighter_2.alive:
+            round_over = True
+            round_over_time = pygame.time.get_ticks()
+    else:
+        if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
+            round_over = False
+            intro_count = 3
+            fighter_1 = Fighter(1, 200, 400, False, animations)
+            fighter_2 = Fighter(2, 700, 400, True, animations)
+            
     
     for event in pygame.event.get():
         if event.type == pygame.QUIT:

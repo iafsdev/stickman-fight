@@ -86,6 +86,18 @@ while run:
             intro_count -= 1
             last_count_update = time_now
             print(intro_count)
+    else:
+        # Mostrar la imagen durante 2 segundos al llegar a cero el contador
+        if not show_image:
+            show_image = True
+            show_image_time = time_now
+
+        if show_image and time_now - show_image_time < 1000:
+            screen.blit(fight_img, (0, 20))
+        else:
+            # Mostrar la imagen de fondo y mover a los peleadores
+            fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
+            fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
             
 
     # Dibujar los peleadores

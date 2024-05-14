@@ -30,6 +30,9 @@ ROUND_OVER_COOLDOWN = 2000
 bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
 bg_image_2 = pygame.image.load('./assets/images/background/Fonfoooo.png').convert_alpha()
 
+victory_img = pygame.image.load('./assets/images/background/Letras VictoryFinal.png').convert_alpha()
+fight_img = pygame.image.load('./assets/images/background/Letras Fight.png').convert_alpha()
+
 # obtener animaciones
 animations = get_animations()
 
@@ -71,13 +74,14 @@ while run:
         # Mover a los peleadores
         fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
         fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
+        screen.blit(fight_img, (0, 20))
     else:
         # Actualiza el contador
         if (pygame.time.get_ticks() - last_count_update) >= 1000:
             intro_count -= 1
             last_count_update = pygame.time.get_ticks()
             print(intro_count)
-
+            
     
     # Actualizar peleadores
     fighter_1.update()
@@ -96,6 +100,7 @@ while run:
             round_over = True
             round_over_time = pygame.time.get_ticks()
     else:
+        screen.blit(victory_img, (0, 20))
         if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:
             round_over = False
             intro_count = 3

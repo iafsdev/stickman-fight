@@ -23,6 +23,7 @@ WHITE = (255, 255, 255)
 # Variable de Juego
 intro_count = 3
 last_count_update = pygame.time.get_ticks()
+score =[0,0]
 show_image = False
 show_image_time = 0
 round_over = False
@@ -34,6 +35,14 @@ bg_image_2 = pygame.image.load('./assets/images/background/Fonfoooo.png').conver
 
 victory_img = pygame.image.load('./assets/images/background/Letras VictoryFinal.png').convert_alpha()
 fight_img = pygame.image.load('./assets/images/background/Letras Fight.png').convert_alpha()
+
+
+score_font = pygame.font.Font('./assets/fonts/turok.ttf', 30)
+
+# Funcion para dibujar Texto
+def draw_text(text, font, text_col, x, y):
+  img = font.render(text, True, text_col)
+  screen.blit(img, (x, y))
 
 # obtener animaciones
 animations = get_animations()
@@ -75,6 +84,8 @@ while run:
     #Mostrar la vida del jugador
     draw_health_bar(fighter_1.health, 20, 20)
     draw_health_bar(fighter_2.health, 600, 20)
+    draw_text("P1: " + str(score_font[0]), score_font, RED, 20, 60)
+    draw_text("P2: " + str(score_font[0]), score_font, RED, 580, 60)
 
     # Actualizar contador
     time_now = pygame.time.get_ticks()

@@ -80,8 +80,8 @@ def main_loop():
         # Mostrar la vida del jugador
         draw_health_bar(fighter_1.health, 20, 20)
         draw_health_bar(fighter_2.health, 600, 20)
-        draw_text("P1: " + str(score[0]), score_font, RED, 20, 60)
-        draw_text("P2: " + str(score[1]), score_font, RED, 598, 60)
+        draw_text("P1: " + str(score[0]), score_font, WHITE, 20, 60)
+        draw_text("P2: " + str(score[1]), score_font, WHITE, 598, 60)
 
         # Actualizar contador
         time_now = pygame.time.get_ticks()

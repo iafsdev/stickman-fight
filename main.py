@@ -81,7 +81,7 @@ def main_loop():
         draw_health_bar(fighter_1.health, 20, 20)
         draw_health_bar(fighter_2.health, 600, 20)
         draw_text("P1: " + str(score[0]), score_font, RED, 20, 60)
-        draw_text("P2: " + str(score[0]), score_font, RED, 598, 60)
+        draw_text("P2: " + str(score[1]), score_font, RED, 598, 60)
 
         # Actualizar contador
         time_now = pygame.time.get_ticks()
@@ -103,8 +103,11 @@ def main_loop():
                 screen.blit(fight_img, (0, 20))
             else:
                 # Mostrar la imagen de fondo y mover a los peleadores
-                fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
-                fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
+                fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2, round_over)
+                fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1, round_over)
+                
+        fighter_1.update()
+        fighter_2.update()
 
         # Dibujar los peleadores
         fighter_1.draw(screen)
@@ -113,11 +116,15 @@ def main_loop():
         # Checar si algún jugador perdió
         if not round_over:
             if not fighter_1.alive:
+                score[1] += 1
                 round_over = True
                 round_over_time = pygame.time.get_ticks()
+                print(score)
             elif not fighter_2.alive:
+                score[0] += 1
                 round_over = True
                 round_over_time = pygame.time.get_ticks()
+                print(score)
         else:
             screen.blit(victory_img, (0, 20))
             if pygame.time.get_ticks() - round_over_time > ROUND_OVER_COOLDOWN:

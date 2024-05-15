@@ -130,6 +130,5 @@ def main_loop():
         pygame.display.update()
 
     pygame.quit()
-
-# Llama a la función del bucle principal para iniciar el juego
+    
 main_loop()

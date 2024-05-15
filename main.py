@@ -26,7 +26,7 @@ last_count_update = pygame.time.get_ticks()
 show_image = False
 show_image_time = 0
 round_over = False
-ROUND_OVER_COOLDOWN = 2000
+ROUND_OVER_COOLDOWN = 2500
 
 # Cargar imágen del fondo
 bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
@@ -96,8 +96,8 @@ while run:
             screen.blit(fight_img, (0, 20))
         else:
             # Mostrar la imagen de fondo y mover a los peleadores
-            fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2)
-            fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1)
+            fighter_1.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_2, round_over)
+            fighter_2.move(SCREEN_WIDTH, SCREEN_HEIGHT, screen, fighter_1, round_over)
 
     # Actualizar peleadores
     fighter_1.update()

@@ -17,10 +17,10 @@ class Fighter():
     self.jump = False
     self.attacking = False
     self.attack_cooldown =  0
-    self.health = 100
+    self.health = 10
     self.alive = True
     
-  def move(self, screen_width, screen_height, surface, target):
+  def move(self, screen_width, screen_height, surface, target, round_over):
     SPEED = 10
     GRAVITY = 2
     dx = 0
@@ -31,7 +31,7 @@ class Fighter():
     key = pygame.key.get_pressed()
     
     #Solo puede realizar otras acciones si no esta atacando actualmente
-    if self.attacking == False:
+    if not self.attacking and self.alive and not round_over:
       # Controles jugador 1
       if self.player == 1:
         # Movimiento
@@ -49,7 +49,7 @@ class Fighter():
         
         # Ataques
         if key[pygame.K_c]:
-          self.attack(surface, target)
+          self.attack(target)
       
       # Controles jugador 2
       if self.player == 2:
@@ -68,7 +68,7 @@ class Fighter():
         
         # Ataques
         if key[pygame.K_n] or key[pygame.K_m]:
-          self.attack(surface, target)
+          self.attack(target)
 
     # Aplicar gravedad
     self.vel_y += GRAVITY 
@@ -114,7 +114,7 @@ class Fighter():
     else:
       self.update_action('idle')
     
-    animation_cooldown = 500
+    animation_cooldown = 23
     self.image = self.animations[self.action][self.frame_index]
     # Aplica un cooldown entre animcaciones
     if pygame.time.get_ticks() - self.update_time > animation_cooldown:
@@ -122,20 +122,23 @@ class Fighter():
       self.update_time = pygame.time.get_ticks()
     # Checa si hay más animación
     if self.frame_index >= len(self.animations[self.action]):
-      self.frame_index = 0
-      # Checa si se terminó de atacar
-      if self.action == 'attack':
-        self.attacking = False
-        self.attack_cooldown = 12
+      # Checa si el jugador está muerto
+      if not self.alive:
+        self.frame_index = len(self.animations[self.action]) - 1
+      else:
+        self.frame_index = 0
+        # Checa si se terminó de atacar
+        if self.action == 'attack':
+          self.attacking = False
+          self.attack_cooldown = 12
       
 
-  def attack (self, surface, target):
+  def attack (self, target):
     if self.attack_cooldown == 0:
       self.attacking = True
-      attacking_rect = pygame.Rect(self.rect.centerx - (self. rect.width * self.flip), self.rect.y,  self.rect.width, self.rect.height)
+      attacking_rect = pygame.Rect(self.rect.centerx - (0.9 * self.rect.width * self.flip), self.rect.y,  0.9 *self.rect.width, self.rect.height)
       if attacking_rect.colliderect(target.rect):
-        target.health -= 1
-      pygame.draw.rect(surface, (0, 255, 0), attacking_rect)
+        target.health -= 5
     
   def update_action(self, new_action):
     # Checa si la nueva acción es diferente a la actual

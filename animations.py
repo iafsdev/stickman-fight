@@ -28,10 +28,10 @@ def get_animations():
     attack_list.append(pygame.transform.scale(img, (size * scale, size * scale)))
   animations['attack'] = attack_list
   
-  # death_list = []
-  # for i in range(1,15):
-  #   img = pygame.image.load(f'./assets/images/animations/death/{i}.png').convert_alpha()
-  #   death_list.append(pygame.transform.scale(img, (size * scale, size * scale)))
-  # animations['death'] = death_list
+  death_list = []
+  for i in range(1,60):
+    img = pygame.image.load(f'./assets/images/animations/death/{i}.png').convert_alpha()
+    death_list.append(pygame.transform.scale(img, (size * scale, size * scale)))
+  animations['death'] = death_list
   
   return animations

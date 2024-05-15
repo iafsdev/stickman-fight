@@ -48,7 +48,7 @@ class Fighter():
           self.jump = True
         
         # Ataques
-        if key[pygame.K_c]:
+        if key[pygame.K_c] or key[pygame.K_v]:
           self.attack(target)
       
       # Controles jugador 2

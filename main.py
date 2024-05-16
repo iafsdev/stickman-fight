@@ -24,13 +24,13 @@ def main_loop():
     WHITE = (255, 255, 255)
 
     # Variable de Juego
-    intro_count = 3
-    last_count_update = pygame.time.get_ticks()
-    score = [0, 0]
-    show_image = False
-    show_image_time = 0
-    round_over = False
-    ROUND_OVER_COOLDOWN = 2000
+    intro_count = 3 # Contador inicial con 3 segundos
+    last_count_update = pygame.time.get_ticks() # Contador actualizado para indicar la imagen fight
+    score = [0, 0] # Contador de victorias de cada jugador
+    show_image = False # Controla si se muestra la imagen o no
+    show_image_time = 0 # Determina el tiempo que se muestra la imagen
+    round_over = False # Indica si la ronda ha terminado
+    ROUND_OVER_COOLDOWN = 2000 # Tiempo de espera o enfriamiento despues de que la ronda haya finalizado (2 segundos)
 
     # Cargar imágenes
     bg_image = pygame.image.load('./assets/images/background/plataforma1.png').convert_alpha()
@@ -80,8 +80,8 @@ def main_loop():
         # Mostrar la vida del jugador
         draw_health_bar(fighter_1.health, 20, 20)
         draw_health_bar(fighter_2.health, 600, 20)
-        draw_text("P1: " + str(score[0]), score_font, RED, 20, 60)
-        draw_text("P2: " + str(score[1]), score_font, RED, 598, 60)
+        draw_text("P1: " + str(score[0]), score_font, WHITE, 20, 60)
+        draw_text("P2: " + str(score[1]), score_font, WHITE, 598, 60)
 
         # Actualizar contador
         time_now = pygame.time.get_ticks()
@@ -134,8 +134,8 @@ def main_loop():
                 fighter_1 = Fighter(1, 200, 400, False, get_animations())
                 fighter_2 = Fighter(2, 700, 400, True, get_animations())
 
-        pygame.display.update()
+        pygame.display.update() # Actualiza la ventana de la aplicación
 
-    pygame.quit()
+    pygame.quit() # Cierra todos los modulos de Pygame de forma segura
     
-main_loop()
+main_loop() # Manda llamar la función que contiene el bucle principal del juego

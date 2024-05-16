@@ -48,7 +48,7 @@ class Fighter():
           self.jump = True
         
         # Ataques
-        if key[pygame.K_c]:
+        if key[pygame.K_c] or key[pygame.K_v]:
           self.attack(target)
       
       # Controles jugador 2
@@ -132,7 +132,7 @@ class Fighter():
           self.attacking = False
           self.attack_cooldown = 12
       
-
+  # Función del golpe del personaje detectando las colisiones y la reducción de salud si el ataque tiene éxito.
   def attack (self, target):
     if self.attack_cooldown == 0:
       self.attacking = True
